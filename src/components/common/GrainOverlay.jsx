@@ -8,7 +8,7 @@ export default function GrainOverlay() {
   return (
     <div 
       aria-hidden="true"
-      className="fixed inset-0 pointer-events-none z-50 film-grain opacity-40 mix-blend-overlay"
+      className="fixed inset-0 pointer-events-none z-50 film-grain opacity-25 mix-blend-multiply"
     />
   );
 }

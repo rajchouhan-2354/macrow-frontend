@@ -14,7 +14,7 @@ import TornDivider from './components/common/TornDivider';
 
 export default function App() {
   return (
-    <div className="relative min-h-screen bg-macrow-dark text-macrow-textMain overflow-x-hidden">
+    <div className="relative min-h-screen bg-macrow-white text-macrow-textDark overflow-x-hidden font-sans selection:bg-macrow-red selection:text-macrow-white">
       {/* Film Grain Texture Overlay */}
       <GrainOverlay />
 

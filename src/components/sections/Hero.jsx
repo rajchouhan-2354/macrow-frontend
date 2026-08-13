@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Volume2, VolumeX, ChevronDown, Sparkles, ArrowRight } from 'lucide-react';
+import { Volume2, VolumeX } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function Hero() {
@@ -14,7 +14,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative w-full h-screen overflow-hidden bg-macrow-darker">
+    <section className="relative w-full h-screen overflow-hidden bg-macrow-black">
       {/* Background Video Player */}
       <div className="absolute inset-0 w-full h-full overflow-hidden">
         <video
@@ -33,21 +33,19 @@ export default function Hero() {
         </video>
 
         {/* Subtle Dark Vignette for Text Contrast at Bottom */}
-        <div className="absolute inset-0 bg-gradient-to-t from-macrow-darker via-macrow-darker/40 to-transparent opacity-90" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90" />
       </div>
 
       {/* One-Liner Text in Bottom-Left Corner */}
-      <div className="absolute bottom-10 sm:bottom-14 left-6 sm:left-12 lg:left-16 z-20 max-w-2xl">
-
-
+      <div className="absolute bottom-10 sm:bottom-14 left-6 sm:left-12 lg:left-16 z-20 max-w-3xl">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-3xl sm:text-5xl lg:text-6xl font-display font-bold text-macrow-cream tracking-tight leading-[1.15]"
+          className="text-3xl sm:text-5xl lg:text-6xl font-display font-bold text-macrow-white tracking-tight leading-[1.15]"
         >
           Growth belongs to those who{' '}
-          <span className="font-western text-macrow-brass italic font-normal underline decoration-macrow-brass/40 decoration-wavy underline-offset-8">
+          <span className="font-western text-macrow-red italic font-normal underline decoration-macrow-red/50 decoration-wavy underline-offset-8">
             observe first.
           </span>
         </motion.h1>
@@ -56,13 +54,12 @@ export default function Hero() {
       {/* Audio Mute/Unmute Toggle */}
       <button
         onClick={toggleAudio}
-        className="absolute bottom-10 right-6 sm:right-12 z-30 p-3 rounded-full bg-macrow-surface/70 border border-macrow-borderDark text-macrow-cream hover:text-macrow-brass hover:border-macrow-brass transition-all backdrop-blur-md shadow-lg"
+        className="absolute bottom-10 right-6 sm:right-12 z-30 p-3 rounded-full bg-macrow-black/70 border border-white/20 text-macrow-white hover:text-macrow-red hover:border-macrow-red transition-all backdrop-blur-md shadow-lg"
         title={isMuted ? "Unmute Video" : "Mute Video"}
         aria-label={isMuted ? "Unmute Video" : "Mute Video"}
       >
-        {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5 text-macrow-brass" />}
+        {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5 text-macrow-red" />}
       </button>
-
     </section>
   );
 }

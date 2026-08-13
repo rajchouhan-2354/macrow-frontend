@@ -8,21 +8,39 @@ export default {
     extend: {
       colors: {
         macrow: {
-          dark: '#0E0D0C',
-          darker: '#070706',
-          surface: '#171614',
-          surfaceLight: '#22201D',
-          cream: '#F3E9D2',
-          creamMuted: '#D9CBAC',
-          parchment: '#E8DCC4',
-          rope: '#6B4A2C',
-          ropeLight: '#9E744A',
-          brass: '#C9A44C',
-          brassLight: '#E5BF65',
-          brassDark: '#997930',
-          textMain: '#E5DFD3',
-          textMuted: '#9A9183',
-          borderDark: '#2B2824',
+          // 60% Dominant: White (#f1f1f1)
+          white: '#f1f1f1',
+          light: '#f1f1f1',
+          lightSurface: '#ffffff',
+          lightMuted: '#e8e8e8',
+          cream: '#f1f1f1',
+          parchment: '#f1f1f1',
+          
+          // 30% Secondary: Black (#111111)
+          black: '#111111',
+          dark: '#111111',
+          darker: '#0a0a0a',
+          surface: '#181818',
+          surfaceLight: '#242424',
+          
+          // 10% Accent: Red (#ff3803)
+          red: '#ff3803',
+          brass: '#ff3803',
+          brassLight: '#ff5722',
+          brassDark: '#d82d00',
+          rope: '#ff3803',
+          ropeLight: '#ff5722',
+          orange: '#ff3803',
+          
+          // Text & Borders
+          textDark: '#111111',
+          textDarkMuted: '#555555',
+          textLight: '#f1f1f1',
+          textLightMuted: '#9e9e9e',
+          textMain: '#111111',
+          textMuted: '#555555',
+          borderLight: '#e0e0e0',
+          borderDark: '#262626',
         }
       },
       fontFamily: {
@@ -32,9 +50,11 @@ export default {
         sans: ['Inter', 'Sora', 'sans-serif'],
       },
       boxShadow: {
-        'rope-card': '0 15px 35px -5px rgba(0, 0, 0, 0.7), 0 5px 15px rgba(107, 74, 44, 0.15)',
-        'wanted': '0 20px 40px rgba(0,0,0,0.8), 0 0 15px rgba(201, 164, 76, 0.15)',
-        'gold-glow': '0 0 25px rgba(201, 164, 76, 0.3)',
+        'rope-card': '0 15px 35px -5px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(255, 56, 3, 0.15)',
+        'wanted': '0 20px 40px rgba(0,0,0,0.18), 0 0 15px rgba(255, 56, 3, 0.2)',
+        'gold-glow': '0 0 25px rgba(255, 56, 3, 0.4)',
+        'red-glow': '0 0 25px rgba(255, 56, 3, 0.5)',
+        'card-light': '0 10px 30px -5px rgba(0, 0, 0, 0.08), 0 4px 10px -2px rgba(0, 0, 0, 0.04)',
       },
       keyframes: {
         sway: {

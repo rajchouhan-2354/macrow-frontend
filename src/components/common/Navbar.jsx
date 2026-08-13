@@ -169,7 +169,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 40) {
+      if (window.scrollY > 30) {
         setScrolled(true);
       } else {
         setScrolled(false);
@@ -231,10 +231,11 @@ export default function Navbar() {
   return (
     <header
       ref={headerRef}
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${scrolled || activeMenu
-          ? 'bg-macrow-darker/98 backdrop-blur-xl border-b border-macrow-borderDark shadow-2xl'
-          : 'bg-gradient-to-b from-macrow-darker/90 via-macrow-darker/50 to-transparent'
-        } ${scrolled ? 'py-3' : 'py-4'}`}
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+        scrolled || activeMenu
+          ? 'bg-macrow-white/95 backdrop-blur-xl border-b border-macrow-borderLight shadow-lg text-macrow-black'
+          : 'bg-gradient-to-b from-black/80 via-black/40 to-transparent text-macrow-white'
+      } ${scrolled ? 'py-3' : 'py-4'}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Brand Logo */}
@@ -244,41 +245,39 @@ export default function Navbar() {
           className="group flex items-center gap-2 focus:outline-none rounded"
           aria-label="MACROW Home"
         >
-          <div className="w-9 h-9 rounded bg-macrow-surface border border-macrow-brass/40 flex items-center justify-center font-western text-xl text-macrow-brass group-hover:border-macrow-brass transition-colors shadow-inner">
-            M
-          </div>
-          <div className="flex flex-col">
-            <span className="font-western text-2xl tracking-wider text-macrow-cream group-hover:text-macrow-brass transition-colors">
-              MACROW
-            </span>
-            <span className="text-[9px] tracking-widest text-macrow-textMuted font-sans uppercase -mt-1">
-              Growth Platform
-            </span>
-          </div>
+          <img src="/logo.png" alt="MACROW Digital" className="h-16 sm:h-18 w-auto object-contain" />
         </a>
 
         {/* Desktop Nav Links */}
         <nav className="hidden md:flex items-center gap-1.5 lg:gap-2">
           {navLinks.map((link) => {
             const isActive = activeMenu === link.name;
+            const isLightBg = scrolled || activeMenu;
             return link.hasDropdown ? (
               <button
                 key={link.name}
                 onClick={() => handleNavClick(link)}
-                className={`px-3 py-1.5 rounded text-sm font-medium transition-all duration-200 flex items-center gap-1 ${isActive
-                    ? 'bg-macrow-surface text-macrow-cream shadow border border-macrow-brass/40 font-semibold'
-                    : 'text-macrow-textMain/80 hover:text-macrow-brass hover:bg-macrow-surface/60'
-                  }`}
+                className={`px-3 py-1.5 rounded text-sm font-medium transition-all duration-200 flex items-center gap-1 ${
+                  isActive
+                    ? 'bg-macrow-black text-macrow-white shadow border border-macrow-red/40 font-semibold'
+                    : isLightBg
+                    ? 'text-macrow-black/80 hover:text-macrow-red hover:bg-black/5'
+                    : 'text-white/90 hover:text-macrow-red hover:bg-white/10'
+                }`}
               >
                 <span>{link.name}</span>
-                <ChevronDown className={`w-3.5 h-3.5 text-macrow-brass transition-transform duration-200 ${isActive ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-3.5 h-3.5 text-macrow-red transition-transform duration-200 ${isActive ? 'rotate-180' : ''}`} />
               </button>
             ) : (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={() => handleNavClick(link)}
-                className="px-3 py-1.5 rounded text-sm font-medium text-macrow-textMain/80 hover:text-macrow-brass hover:bg-macrow-surface/60 transition-all"
+                className={`px-3 py-1.5 rounded text-sm font-medium transition-all ${
+                  isLightBg
+                    ? 'text-macrow-black/80 hover:text-macrow-red hover:bg-black/5'
+                    : 'text-white/90 hover:text-macrow-red hover:bg-white/10'
+                }`}
               >
                 {link.name}
               </a>
@@ -291,7 +290,7 @@ export default function Navbar() {
           <a
             href="#contact"
             onClick={() => setActiveMenu(null)}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-macrow-brass text-macrow-darker font-semibold text-sm hover:bg-macrow-brassLight transition-all duration-200 shadow-md hover:shadow-gold-glow active:scale-95"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-macrow-red text-macrow-white font-semibold text-sm hover:bg-macrow-brassLight transition-all duration-200 shadow-md hover:shadow-red-glow active:scale-95"
           >
             Start a Conversation
             <ArrowUpRight className="w-4 h-4" />
@@ -301,20 +300,24 @@ export default function Navbar() {
         {/* Mobile Hamburger Button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 rounded text-macrow-cream hover:text-macrow-brass hover:bg-macrow-surface transition-colors focus:outline-none focus:ring-2 focus:ring-macrow-brass"
+          className={`md:hidden p-2 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-macrow-red ${
+            scrolled || activeMenu
+              ? 'text-macrow-black hover:text-macrow-red hover:bg-black/5'
+              : 'text-white hover:text-macrow-red hover:bg-white/10'
+          }`}
           aria-label="Toggle Navigation Menu"
         >
           {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
 
-      {/* --- MEGA DROPDOWN MENU PANEL --- */}
+      {/* --- MEGA DROPDOWN MENU PANEL (Secondary 30% Black Container) --- */}
       {activeMenu && activeData && (
-        <div className="hidden md:block w-full border-t border-macrow-borderDark/80 bg-macrow-darker/98 backdrop-blur-2xl py-8 shadow-2xl transition-all duration-200 animate-fadeIn mt-3">
+        <div className="hidden md:block w-full border-t border-macrow-borderDark bg-macrow-black/98 text-macrow-white backdrop-blur-2xl py-8 shadow-2xl transition-all duration-200 animate-fadeIn mt-3">
           {activeData.layout === 'fullWidth' ? (
-            /* Mode B: Full-width 4-Column Layout (Matching Solutions & Industries Screenshots) */
+            /* Mode B: Full-width 4-Column Layout */
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <span className="text-xs font-mono tracking-widest text-macrow-brass font-bold uppercase block mb-6">
+              <span className="text-xs font-mono tracking-widest text-macrow-red font-bold uppercase block mb-6">
                 {activeData.eyebrow}
               </span>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
@@ -325,7 +328,7 @@ export default function Navbar() {
                         <a
                           href={activeData.href}
                           onClick={() => setActiveMenu(null)}
-                          className="text-xs font-medium text-macrow-textMain/80 hover:text-macrow-brass transition-all duration-150 block py-0.5 hover:translate-x-1"
+                          className="text-xs font-medium text-macrow-white/80 hover:text-macrow-red transition-all duration-150 block py-0.5 hover:translate-x-1"
                         >
                           {item}
                         </a>
@@ -339,21 +342,21 @@ export default function Navbar() {
             /* Mode A: Standard 3-Column Layout with Left Info Column */
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-12 gap-8 items-start">
               {/* Left Column */}
-              <div className="col-span-3 border-r border-macrow-borderDark/60 pr-6">
-                <span className="text-[10px] font-mono tracking-widest text-macrow-brass font-bold uppercase block mb-2">
+              <div className="col-span-3 border-r border-macrow-borderDark/80 pr-6">
+                <span className="text-[10px] font-mono tracking-widest text-macrow-red font-bold uppercase block mb-2">
                   {activeData.eyebrow}
                 </span>
-                <h3 className="text-3xl font-display font-bold text-macrow-cream">
+                <h3 className="text-3xl font-display font-bold text-macrow-white">
                   {activeData.title}
                 </h3>
-                <p className="mt-3 text-xs font-sans text-macrow-textMain/80 leading-relaxed">
+                <p className="mt-3 text-xs font-sans text-macrow-white/80 leading-relaxed">
                   {activeData.description}
                 </p>
 
                 <a
                   href={activeData.href}
                   onClick={() => setActiveMenu(null)}
-                  className="mt-6 inline-flex items-center gap-1.5 text-xs font-bold text-macrow-brass hover:underline transition-all group"
+                  className="mt-6 inline-flex items-center gap-1.5 text-xs font-bold text-macrow-red hover:underline transition-all group"
                 >
                   <span>Explore {activeData.title}</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -366,7 +369,7 @@ export default function Navbar() {
                 <div className="space-y-6">
                   {activeData.columnGroup1?.map((group) => (
                     <div key={group.title} className="space-y-2.5">
-                      <h4 className="text-xs font-bold text-macrow-cream font-sans uppercase tracking-wider border-b border-macrow-borderDark/60 pb-1">
+                      <h4 className="text-xs font-bold text-macrow-white font-sans uppercase tracking-wider border-b border-macrow-borderDark/80 pb-1">
                         {group.title}
                       </h4>
                       <ul className="space-y-1.5">
@@ -375,7 +378,7 @@ export default function Navbar() {
                             <a
                               href={activeData.href}
                               onClick={() => setActiveMenu(null)}
-                              className="text-xs text-macrow-textMuted hover:text-macrow-brass transition-colors block py-0.5"
+                              className="text-xs text-macrow-textLightMuted hover:text-macrow-red transition-colors block py-0.5"
                             >
                               {item}
                             </a>
@@ -390,7 +393,7 @@ export default function Navbar() {
                 <div className="space-y-6">
                   {activeData.columnGroup2?.map((group) => (
                     <div key={group.title} className="space-y-2.5">
-                      <h4 className="text-xs font-bold text-macrow-cream font-sans uppercase tracking-wider border-b border-macrow-borderDark/60 pb-1">
+                      <h4 className="text-xs font-bold text-macrow-white font-sans uppercase tracking-wider border-b border-macrow-borderDark/80 pb-1">
                         {group.title}
                       </h4>
                       <ul className="space-y-1.5">
@@ -399,7 +402,7 @@ export default function Navbar() {
                             <a
                               href={activeData.href}
                               onClick={() => setActiveMenu(null)}
-                              className="text-xs text-macrow-textMuted hover:text-macrow-brass transition-colors block py-0.5"
+                              className="text-xs text-macrow-textLightMuted hover:text-macrow-red transition-colors block py-0.5"
                             >
                               {item}
                             </a>
@@ -414,7 +417,7 @@ export default function Navbar() {
                 <div className="space-y-6">
                   {activeData.columnGroup3?.map((group) => (
                     <div key={group.title} className="space-y-2.5">
-                      <h4 className="text-xs font-bold text-macrow-cream font-sans uppercase tracking-wider border-b border-macrow-borderDark/60 pb-1">
+                      <h4 className="text-xs font-bold text-macrow-white font-sans uppercase tracking-wider border-b border-macrow-borderDark/80 pb-1">
                         {group.title}
                       </h4>
                       <ul className="space-y-1.5">
@@ -423,7 +426,7 @@ export default function Navbar() {
                             <a
                               href={activeData.href}
                               onClick={() => setActiveMenu(null)}
-                              className="text-xs text-macrow-textMuted hover:text-macrow-brass transition-colors block py-0.5"
+                              className="text-xs text-macrow-textLightMuted hover:text-macrow-red transition-colors block py-0.5"
                             >
                               {item}
                             </a>
@@ -443,7 +446,7 @@ export default function Navbar() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <div className="md:hidden fixed inset-0 z-50 flex justify-end overflow-hidden">
-            {/* Backdrop Blur Overlay (Clickable to close) */}
+            {/* Backdrop Blur Overlay */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -453,21 +456,21 @@ export default function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
             />
 
-            {/* Slide-over Drawer Panel (Right aligned, covering ~85% width leaving left BG exposed) */}
+            {/* Slide-over Drawer Panel */}
             <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 28, stiffness: 220 }}
-              className="relative w-[85vw] max-w-sm bg-black/95 backdrop-blur-3xl border-l border-white/10 h-full p-8 flex flex-col justify-between z-10 shadow-2xl overflow-y-auto"
+              className="relative w-[85vw] max-w-sm bg-macrow-black/95 text-macrow-white backdrop-blur-3xl border-l border-white/10 h-full p-8 flex flex-col justify-between z-10 shadow-2xl overflow-y-auto"
             >
               <div>
                 {/* Top Header with Circular Close Button */}
                 <div className="flex items-center justify-between pb-8 border-b border-white/10">
-                  <span className="font-western text-2xl text-white">MACROW</span>
+                  <img src="/logo.jpeg" alt="MACROW Digital" className="h-8 w-auto object-contain rounded" />
                   <button
                     onClick={() => setMobileMenuOpen(false)}
-                    className="w-12 h-12 rounded-full border border-white/20 bg-white/10 backdrop-blur-md flex items-center justify-center text-white hover:text-macrow-brass hover:border-macrow-brass transition-all shadow-lg"
+                    className="w-12 h-12 rounded-full border border-white/20 bg-white/10 backdrop-blur-md flex items-center justify-center text-white hover:text-macrow-red hover:border-macrow-red transition-all shadow-lg"
                     aria-label="Close menu"
                   >
                     <X className="w-6 h-6" />
@@ -481,7 +484,7 @@ export default function Navbar() {
                       key={link.name}
                       href={link.href || megaMenuData[link.name]?.href || '#what-we-develop'}
                       onClick={() => setMobileMenuOpen(false)}
-                      className="text-2xl sm:text-3xl font-bold font-display text-white hover:text-macrow-brass transition-colors tracking-tight"
+                      className="text-2xl sm:text-3xl font-bold font-display text-white hover:text-macrow-red transition-colors tracking-tight"
                     >
                       {link.name}
                     </a>
@@ -494,11 +497,11 @@ export default function Navbar() {
                 <a
                   href="#contact"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full py-4 rounded-2xl bg-macrow-brass text-macrow-darker font-bold text-base text-center shadow-xl hover:bg-macrow-brassLight transition-all active:scale-95 shadow-gold-glow"
+                  className="w-full py-4 rounded-2xl bg-macrow-red text-macrow-white font-bold text-base text-center shadow-xl hover:bg-macrow-brassLight transition-all active:scale-95 shadow-red-glow"
                 >
                   Start a Conversation
                 </a>
-                <p className="text-xs text-center text-stone-400 font-mono">
+                <p className="text-xs text-center text-macrow-textLightMuted font-mono">
                   Ahmedabad, Gujarat, India · Global Growth Agency
                 </p>
               </div>

@@ -41,8 +41,8 @@ const awards = [
 ];
 
 function LaurelWreath({ title, subtitle, isDark = false }) {
-  const strokeColor = isDark ? '#E5DFD3' : '#1A1815';
-  const textColor = isDark ? 'text-macrow-cream' : 'text-macrow-darker';
+  const strokeColor = isDark ? '#f1f1f1' : '#111111';
+  const textColor = isDark ? 'text-macrow-white' : 'text-macrow-black';
 
   return (
     <div className="relative flex flex-col items-center justify-center p-6 text-center w-full h-full min-h-[190px]">
@@ -71,7 +71,7 @@ function LaurelWreath({ title, subtitle, isDark = false }) {
           {title}
         </span>
         {subtitle && (
-          <span className={`text-[10px] font-sans mt-1.5 ${isDark ? 'text-macrow-brass' : 'text-stone-600'}`}>
+          <span className="text-[10px] font-sans mt-1.5 text-macrow-red font-semibold">
             {subtitle}
           </span>
         )}
@@ -82,29 +82,29 @@ function LaurelWreath({ title, subtitle, isDark = false }) {
 
 export default function Recognition() {
   return (
-    <section className="py-24 bg-macrow-dark relative border-t border-b border-macrow-borderDark overflow-hidden">
+    <section className="py-24 bg-macrow-white text-macrow-textDark relative border-t border-b border-macrow-borderLight overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Centered Section Header (Matching Screenshot) */}
+        {/* Centered Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-macrow-surface border border-macrow-brass/30 mb-4 shadow">
-            <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
-            <span className="text-xs font-mono tracking-widest text-macrow-cream uppercase">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-macrow-lightSurface border border-macrow-borderLight mb-4 shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-macrow-red animate-pulse" />
+            <span className="text-xs font-mono tracking-widest text-macrow-black uppercase font-semibold">
               Recognition & Achievement
             </span>
-            <span className="w-2 h-2 rounded-full bg-blue-500" />
+            <span className="w-2 h-2 rounded-full bg-macrow-red" />
           </div>
 
-          <h2 className="text-4xl sm:text-6xl font-display font-bold text-macrow-cream tracking-tight">
+          <h2 className="text-4xl sm:text-6xl font-display font-bold text-macrow-black tracking-tight">
             Awards & Recognition
           </h2>
 
-          <p className="mt-4 text-base sm:text-lg text-macrow-textMain/80 font-sans leading-relaxed">
+          <p className="mt-4 text-base sm:text-lg text-macrow-textDarkMuted font-sans leading-relaxed">
             Celebrated excellence in AI-powered film, strategy, marcomm & technology growth.
           </p>
         </div>
 
-        {/* 6 Laurel Wreath Award Cards Grid (Matching Reference Image) */}
+        {/* 6 Laurel Wreath Award Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {awards.map((award, index) => (
             <motion.div
@@ -117,24 +117,24 @@ export default function Recognition() {
             >
               {/* Type 1: Clean White/Surface Card */}
               {award.type === 'light' && (
-                <div className="bg-macrow-cream text-macrow-darker rounded-2xl shadow-xl border border-macrow-parchment transition-transform duration-300 group-hover:-translate-y-1">
+                <div className="bg-macrow-lightSurface text-macrow-black rounded-2xl shadow-card-light border border-macrow-borderLight transition-transform duration-300 group-hover:-translate-y-1">
                   <LaurelWreath title={award.title} subtitle={award.subtitle} isDark={false} />
                 </div>
               )}
 
-              {/* Type 2: Dark Frame Outer Border (Matching Card 3 & 4 in Screenshot) */}
+              {/* Type 2: Dark Frame Outer Border (Secondary 30% Black element) */}
               {award.type === 'frame-dark' && (
-                <div className="bg-macrow-surface p-3 rounded-3xl border-4 border-macrow-borderDark shadow-2xl transition-transform duration-300 group-hover:-translate-y-1">
-                  <div className="bg-macrow-cream text-macrow-darker rounded-xl border border-macrow-parchment">
+                <div className="bg-macrow-black p-3 rounded-3xl border-2 border-macrow-black shadow-xl transition-transform duration-300 group-hover:-translate-y-1">
+                  <div className="bg-macrow-lightSurface text-macrow-black rounded-xl border border-macrow-borderLight">
                     <LaurelWreath title={award.title} subtitle={award.subtitle} isDark={false} />
                   </div>
                 </div>
               )}
 
-              {/* Type 3: Filled Dark Card (Matching Card 5 in Screenshot) */}
+              {/* Type 3: Filled Dark Card (Secondary 30% Black element) */}
               {award.type === 'filled-dark' && (
-                <div className="bg-macrow-surface p-3 rounded-3xl border-4 border-macrow-borderDark shadow-2xl transition-transform duration-300 group-hover:-translate-y-1">
-                  <div className="bg-macrow-darker text-macrow-cream rounded-xl border border-macrow-brass/40">
+                <div className="bg-macrow-black p-3 rounded-3xl border-2 border-macrow-black shadow-xl transition-transform duration-300 group-hover:-translate-y-1">
+                  <div className="bg-macrow-surface text-macrow-white rounded-xl border border-macrow-red/40">
                     <LaurelWreath title={award.title} subtitle={award.subtitle} isDark={true} />
                   </div>
                 </div>
