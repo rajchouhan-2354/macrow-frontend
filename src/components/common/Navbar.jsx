@@ -231,21 +231,20 @@ export default function Navbar() {
   return (
     <header
       ref={headerRef}
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        scrolled || activeMenu
-          ? 'bg-macrow-white/95 backdrop-blur-xl border-b border-macrow-borderLight shadow-lg text-macrow-black'
-          : 'bg-gradient-to-b from-black/80 via-black/40 to-transparent text-macrow-white'
-      } ${scrolled ? 'py-3' : 'py-4'}`}
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${scrolled || activeMenu
+        ? 'bg-macrow-black/90 backdrop-blur-2xl border-b border-white/5 shadow-lg text-macrow-white'
+        : 'bg-gradient-to-b from-black/80 via-black/40 to-transparent text-macrow-white'
+        } ${scrolled ? 'py-3' : 'py-4'}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Brand Logo */}
         <a
           href="#"
           onClick={() => setActiveMenu(null)}
-          className="group flex items-center gap-2 focus:outline-none rounded"
+          className="group flex items-center gap-2 focus:outline-none rounded-lg"
           aria-label="MACROW Home"
         >
-          <img src="/logo.png" alt="MACROW Digital" className="h-16 sm:h-18 w-auto object-contain" />
+          <img src="/logo.png" alt="MACROW Digital" className="h-12 sm:h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105" />
         </a>
 
         {/* Desktop Nav Links */}
@@ -253,34 +252,43 @@ export default function Navbar() {
           {navLinks.map((link) => {
             const isActive = activeMenu === link.name;
             const isLightBg = scrolled || activeMenu;
-            return link.hasDropdown ? (
-              <button
-                key={link.name}
-                onClick={() => handleNavClick(link)}
-                className={`px-3 py-1.5 rounded text-sm font-medium transition-all duration-200 flex items-center gap-1 ${
-                  isActive
-                    ? 'bg-macrow-black text-macrow-white shadow border border-macrow-red/40 font-semibold'
-                    : isLightBg
-                    ? 'text-macrow-black/80 hover:text-macrow-red hover:bg-black/5'
-                    : 'text-white/90 hover:text-macrow-red hover:bg-white/10'
-                }`}
-              >
-                <span>{link.name}</span>
-                <ChevronDown className={`w-3.5 h-3.5 text-macrow-red transition-transform duration-200 ${isActive ? 'rotate-180' : ''}`} />
-              </button>
-            ) : (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={() => handleNavClick(link)}
-                className={`px-3 py-1.5 rounded text-sm font-medium transition-all ${
-                  isLightBg
-                    ? 'text-macrow-black/80 hover:text-macrow-red hover:bg-black/5'
-                    : 'text-white/90 hover:text-macrow-red hover:bg-white/10'
-                }`}
-              >
-                {link.name}
-              </a>
+            return (
+              <div key={link.name} className="relative">
+                {link.hasDropdown ? (
+                  <button
+                    onClick={() => handleNavClick(link)}
+                    className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center gap-1.5 z-10 ${isActive
+                      ? 'text-macrow-white font-semibold'
+                      : isLightBg
+                        ? 'text-macrow-white/80 hover:text-macrow-white'
+                        : 'text-white/90 hover:text-white'
+                      }`}
+                  >
+                    <span>{link.name}</span>
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isActive ? 'rotate-180 text-macrow-white' : 'text-macrow-red'}`} />
+                  </button>
+                ) : (
+                  <a
+                    href={link.href}
+                    onClick={() => handleNavClick(link)}
+                    className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all z-10 block ${isLightBg
+                      ? 'text-macrow-white/80 hover:text-macrow-white hover:bg-white/5'
+                      : 'text-white/90 hover:text-white hover:bg-white/10'
+                      }`}
+                  >
+                    {link.name}
+                  </a>
+                )}
+
+                {/* Active Pill Animation */}
+                {isActive && (
+                  <motion.div
+                    layoutId="activeNavIndicator"
+                    className="absolute inset-0 bg-white/10 rounded-full -z-10"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  />
+                )}
+              </div>
             );
           })}
         </nav>
@@ -290,9 +298,9 @@ export default function Navbar() {
           <a
             href="#contact"
             onClick={() => setActiveMenu(null)}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-macrow-red text-macrow-white font-semibold text-sm hover:bg-macrow-brassLight transition-all duration-200 shadow-md hover:shadow-red-glow active:scale-95"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-macrow-red text-macrow-white font-semibold text-sm hover:bg-macrow-red/90 transition-all duration-300 shadow-lg hover:shadow-red-500/30 hover:-translate-y-0.5 active:translate-y-0"
           >
-            Start a Conversation
+            Book a Demo
             <ArrowUpRight className="w-4 h-4" />
           </a>
         </div>
@@ -300,11 +308,10 @@ export default function Navbar() {
         {/* Mobile Hamburger Button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className={`md:hidden p-2 rounded transition-colors focus:outline-none focus:ring-2 focus:ring-macrow-red ${
-            scrolled || activeMenu
-              ? 'text-macrow-black hover:text-macrow-red hover:bg-black/5'
-              : 'text-white hover:text-macrow-red hover:bg-white/10'
-          }`}
+          className={`md:hidden p-2 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-macrow-red ${scrolled || activeMenu
+            ? 'text-macrow-white hover:text-macrow-red hover:bg-white/10'
+            : 'text-white hover:text-macrow-red hover:bg-white/10'
+            }`}
           aria-label="Toggle Navigation Menu"
         >
           {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -312,135 +319,143 @@ export default function Navbar() {
       </div>
 
       {/* --- MEGA DROPDOWN MENU PANEL (Secondary 30% Black Container) --- */}
-      {activeMenu && activeData && (
-        <div className="hidden md:block w-full border-t border-macrow-borderDark bg-macrow-black/98 text-macrow-white backdrop-blur-2xl py-8 shadow-2xl transition-all duration-200 animate-fadeIn mt-3">
-          {activeData.layout === 'fullWidth' ? (
-            /* Mode B: Full-width 4-Column Layout */
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <span className="text-xs font-mono tracking-widest text-macrow-red font-bold uppercase block mb-6">
-                {activeData.eyebrow}
-              </span>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-                {activeData.columns.map((col, idx) => (
-                  <ul key={idx} className="space-y-3">
-                    {col.map((item) => (
-                      <li key={item}>
-                        <a
-                          href={activeData.href}
-                          onClick={() => setActiveMenu(null)}
-                          className="text-xs font-medium text-macrow-white/80 hover:text-macrow-red transition-all duration-150 block py-0.5 hover:translate-x-1"
-                        >
-                          {item}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                ))}
-              </div>
-            </div>
-          ) : (
-            /* Mode A: Standard 3-Column Layout with Left Info Column */
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-12 gap-8 items-start">
-              {/* Left Column */}
-              <div className="col-span-3 border-r border-macrow-borderDark/80 pr-6">
-                <span className="text-[10px] font-mono tracking-widest text-macrow-red font-bold uppercase block mb-2">
+      <AnimatePresence>
+        {activeMenu && activeData && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="hidden md:block absolute bg-macrow-black/90 top-[100%] left-0 w-full border-t border-macrow-borderDark bg-macrow-black/98 text-macrow-white backdrop-blur-2xl py-8 shadow-2xl"
+          >
+            {activeData.layout === 'fullWidth' ? (
+              /* Mode B: Full-width 4-Column Layout */
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <span className="text-xs font-mono tracking-widest text-macrow-red font-bold uppercase block mb-6">
                   {activeData.eyebrow}
                 </span>
-                <h3 className="text-3xl font-display font-bold text-macrow-white">
-                  {activeData.title}
-                </h3>
-                <p className="mt-3 text-xs font-sans text-macrow-white/80 leading-relaxed">
-                  {activeData.description}
-                </p>
-
-                <a
-                  href={activeData.href}
-                  onClick={() => setActiveMenu(null)}
-                  className="mt-6 inline-flex items-center gap-1.5 text-xs font-bold text-macrow-red hover:underline transition-all group"
-                >
-                  <span>Explore {activeData.title}</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                </a>
-              </div>
-
-              {/* Right Multi-Column Grid */}
-              <div className="col-span-9 grid grid-cols-3 gap-8">
-                {/* Column 1 */}
-                <div className="space-y-6">
-                  {activeData.columnGroup1?.map((group) => (
-                    <div key={group.title} className="space-y-2.5">
-                      <h4 className="text-xs font-bold text-macrow-white font-sans uppercase tracking-wider border-b border-macrow-borderDark/80 pb-1">
-                        {group.title}
-                      </h4>
-                      <ul className="space-y-1.5">
-                        {group.items.map((item) => (
-                          <li key={item}>
-                            <a
-                              href={activeData.href}
-                              onClick={() => setActiveMenu(null)}
-                              className="text-xs text-macrow-textLightMuted hover:text-macrow-red transition-colors block py-0.5"
-                            >
-                              {item}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Column 2 */}
-                <div className="space-y-6">
-                  {activeData.columnGroup2?.map((group) => (
-                    <div key={group.title} className="space-y-2.5">
-                      <h4 className="text-xs font-bold text-macrow-white font-sans uppercase tracking-wider border-b border-macrow-borderDark/80 pb-1">
-                        {group.title}
-                      </h4>
-                      <ul className="space-y-1.5">
-                        {group.items.map((item) => (
-                          <li key={item}>
-                            <a
-                              href={activeData.href}
-                              onClick={() => setActiveMenu(null)}
-                              className="text-xs text-macrow-textLightMuted hover:text-macrow-red transition-colors block py-0.5"
-                            >
-                              {item}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Column 3 */}
-                <div className="space-y-6">
-                  {activeData.columnGroup3?.map((group) => (
-                    <div key={group.title} className="space-y-2.5">
-                      <h4 className="text-xs font-bold text-macrow-white font-sans uppercase tracking-wider border-b border-macrow-borderDark/80 pb-1">
-                        {group.title}
-                      </h4>
-                      <ul className="space-y-1.5">
-                        {group.items.map((item) => (
-                          <li key={item}>
-                            <a
-                              href={activeData.href}
-                              onClick={() => setActiveMenu(null)}
-                              className="text-xs text-macrow-textLightMuted hover:text-macrow-red transition-colors block py-0.5"
-                            >
-                              {item}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                  {activeData.columns.map((col, idx) => (
+                    <ul key={idx} className="space-y-3">
+                      {col.map((item) => (
+                        <li key={item}>
+                          <a
+                            href={activeData.href}
+                            onClick={() => setActiveMenu(null)}
+                            className="text-xs font-medium text-macrow-white/80 hover:text-macrow-red transition-all duration-150 block py-0.5 hover:translate-x-1"
+                          >
+                            {item}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
                   ))}
                 </div>
               </div>
-            </div>
-          )}
-        </div>
-      )}
+            ) : (
+              /* Mode A: Standard 3-Column Layout with Left Info Column */
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-12 gap-8 items-start">
+                {/* Left Column */}
+                <div className="col-span-3 border-r border-macrow-borderDark/80 pr-6">
+                  <span className="text-[10px] font-mono tracking-widest text-macrow-red font-bold uppercase block mb-2">
+                    {activeData.eyebrow}
+                  </span>
+                  <h3 className="text-3xl font-display font-bold text-macrow-white">
+                    {activeData.title}
+                  </h3>
+                  <p className="mt-3 text-xs font-sans text-macrow-white/80 leading-relaxed">
+                    {activeData.description}
+                  </p>
+
+                  <a
+                    href={activeData.href}
+                    onClick={() => setActiveMenu(null)}
+                    className="mt-6 inline-flex items-center gap-1.5 text-xs font-bold text-macrow-red hover:underline transition-all group"
+                  >
+                    <span>Explore {activeData.title}</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                </div>
+
+                {/* Right Multi-Column Grid */}
+                <div className="col-span-9 grid grid-cols-3 gap-8">
+                  {/* Column 1 */}
+                  <div className="space-y-6">
+                    {activeData.columnGroup1?.map((group) => (
+                      <div key={group.title} className="space-y-2.5">
+                        <h4 className="text-xs font-bold text-macrow-white font-sans uppercase tracking-wider border-b border-macrow-borderDark/80 pb-1">
+                          {group.title}
+                        </h4>
+                        <ul className="space-y-1.5">
+                          {group.items.map((item) => (
+                            <li key={item}>
+                              <a
+                                href={activeData.href}
+                                onClick={() => setActiveMenu(null)}
+                                className="text-xs text-macrow-textLightMuted hover:text-macrow-red transition-colors block py-0.5"
+                              >
+                                {item}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Column 2 */}
+                  <div className="space-y-6">
+                    {activeData.columnGroup2?.map((group) => (
+                      <div key={group.title} className="space-y-2.5">
+                        <h4 className="text-xs font-bold text-macrow-white font-sans uppercase tracking-wider border-b border-macrow-borderDark/80 pb-1">
+                          {group.title}
+                        </h4>
+                        <ul className="space-y-1.5">
+                          {group.items.map((item) => (
+                            <li key={item}>
+                              <a
+                                href={activeData.href}
+                                onClick={() => setActiveMenu(null)}
+                                className="text-xs text-macrow-textLightMuted hover:text-macrow-red transition-colors block py-0.5"
+                              >
+                                {item}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Column 3 */}
+                  <div className="space-y-6">
+                    {activeData.columnGroup3?.map((group) => (
+                      <div key={group.title} className="space-y-2.5">
+                        <h4 className="text-xs font-bold text-macrow-white font-sans uppercase tracking-wider border-b border-macrow-borderDark/80 pb-1">
+                          {group.title}
+                        </h4>
+                        <ul className="space-y-1.5">
+                          {group.items.map((item) => (
+                            <li key={item}>
+                              <a
+                                href={activeData.href}
+                                onClick={() => setActiveMenu(null)}
+                                className="text-xs text-macrow-textLightMuted hover:text-macrow-red transition-colors block py-0.5"
+                              >
+                                {item}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Mobile Menu Slide-Over Drawer with Framer Motion Right-to-Left Animation */}
       <AnimatePresence>
@@ -467,7 +482,7 @@ export default function Navbar() {
               <div>
                 {/* Top Header with Circular Close Button */}
                 <div className="flex items-center justify-between pb-8 border-b border-white/10">
-                  <img src="/logo.jpeg" alt="MACROW Digital" className="h-8 w-auto object-contain rounded" />
+                  <img src="/logo.png" alt="MACROW Digital" className="h-10 w-auto object-contain rounded" />
                   <button
                     onClick={() => setMobileMenuOpen(false)}
                     className="w-12 h-12 rounded-full border border-white/20 bg-white/10 backdrop-blur-md flex items-center justify-center text-white hover:text-macrow-red hover:border-macrow-red transition-all shadow-lg"
@@ -478,18 +493,35 @@ export default function Navbar() {
                 </div>
 
                 {/* Large Bold Stacked Nav Links */}
-                <div className="flex flex-col gap-6 pt-6">
+                <motion.div
+                  initial="closed"
+                  animate="open"
+                  variants={{
+                    open: {
+                      transition: { staggerChildren: 0.07, delayChildren: 0.2 }
+                    },
+                    closed: {
+                      transition: { staggerChildren: 0.05, staggerDirection: -1 }
+                    }
+                  }}
+                  className="flex flex-col gap-6 pt-6"
+                >
                   {navLinks.map((link) => (
-                    <a
+                    <motion.a
                       key={link.name}
+                      variants={{
+                        open: { opacity: 1, y: 0 },
+                        closed: { opacity: 0, y: 20 }
+                      }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
                       href={link.href || megaMenuData[link.name]?.href || '#what-we-develop'}
                       onClick={() => setMobileMenuOpen(false)}
                       className="text-2xl sm:text-3xl font-bold font-display text-white hover:text-macrow-red transition-colors tracking-tight"
                     >
                       {link.name}
-                    </a>
+                    </motion.a>
                   ))}
-                </div>
+                </motion.div>
               </div>
 
               {/* Bottom Rounded CTA Button */}

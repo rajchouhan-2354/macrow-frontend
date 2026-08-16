@@ -106,46 +106,50 @@ export default function BehindTheScenes() {
           </div>
 
           {/* Horizontal Frames Carousel / Strip */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-            {filmFrames.map((frame, index) => (
-              <motion.div
-                key={frame.num}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-                onClick={() => setActiveFrame(index)}
-                className={`group cursor-pointer rounded-xl bg-macrow-surface border transition-all duration-300 p-4 flex flex-col justify-between ${
-                  activeFrame === index
-                    ? 'border-macrow-red shadow-red-glow scale-[1.02]'
-                    : 'border-macrow-borderDark hover:border-macrow-red/40'
-                }`}
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="font-western text-xl text-macrow-red">
-                      {frame.num}
-                    </span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-macrow-dark text-macrow-white border border-macrow-borderDark">
-                      {frame.status}
-                    </span>
+          <div className="flex overflow-hidden relative">
+            <motion.div
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ repeat: Infinity, ease: "linear", duration: 25 }}
+              className="flex gap-6 w-max pr-6"
+            >
+              {[...filmFrames, ...filmFrames].map((frame, index) => {
+                const actualIndex = index % filmFrames.length;
+                return (
+                <div
+                  key={`${frame.num}-${index}`}
+                  onClick={() => setActiveFrame(actualIndex)}
+                  className={`w-[280px] sm:w-[320px] shrink-0 group cursor-pointer rounded-xl bg-macrow-surface border transition-all duration-300 p-4 flex flex-col justify-between ${
+                    activeFrame === actualIndex
+                      ? 'border-macrow-red shadow-red-glow scale-[1.02]'
+                      : 'border-macrow-borderDark hover:border-macrow-red/40'
+                  }`}
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="font-western text-xl text-macrow-red">
+                        {frame.num}
+                      </span>
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-macrow-dark text-macrow-white border border-macrow-borderDark">
+                        {frame.status}
+                      </span>
+                    </div>
+
+                    <h3 className="text-base font-bold font-display text-macrow-white group-hover:text-macrow-red transition-colors">
+                      {frame.title}
+                    </h3>
+
+                    <p className="mt-2 text-xs text-macrow-white/80 font-sans leading-relaxed">
+                      {frame.desc}
+                    </p>
                   </div>
 
-                  <h3 className="text-base font-bold font-display text-macrow-white group-hover:text-macrow-red transition-colors">
-                    {frame.title}
-                  </h3>
-
-                  <p className="mt-2 text-xs text-macrow-white/80 font-sans leading-relaxed">
-                    {frame.desc}
-                  </p>
+                  <div className="mt-4 pt-3 border-t border-macrow-borderDark/60 flex items-center justify-between text-[10px] font-mono text-macrow-red">
+                    <span>FRAME {frame.num}</span>
+                    <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </div>
                 </div>
-
-                <div className="mt-4 pt-3 border-t border-macrow-borderDark/60 flex items-center justify-between text-[10px] font-mono text-macrow-red">
-                  <span>FRAME {frame.num}</span>
-                  <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </motion.div>
-            ))}
+              )})}
+            </motion.div>
           </div>
 
           {/* Bottom Film Sprocket Holes Strip */}

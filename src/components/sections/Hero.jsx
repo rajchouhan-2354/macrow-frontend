@@ -45,7 +45,7 @@ export default function Hero() {
           className="text-3xl sm:text-5xl lg:text-6xl font-display font-bold text-macrow-white tracking-tight leading-[1.15]"
         >
           Growth belongs to those who{' '}
-          <span className="font-western text-macrow-red italic font-normal underline decoration-macrow-red/50 decoration-wavy underline-offset-8">
+          <span className="text-3xl sm:text-5xl lg:text-6xl font-western text-macrow-red   ">
             observe first.
           </span>
         </motion.h1>

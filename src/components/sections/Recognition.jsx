@@ -84,7 +84,7 @@ export default function Recognition() {
   return (
     <section className="py-24 bg-macrow-white text-macrow-textDark relative border-t border-b border-macrow-borderLight overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Centered Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-macrow-lightSurface border border-macrow-borderLight mb-4 shadow-sm">

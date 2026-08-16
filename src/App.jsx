@@ -29,7 +29,7 @@ export default function App() {
         {/* Section 2: Featured Work */}
         <FeaturedWork />
 
-        <TornDivider type="rope" />
+        {/* <TornDivider type="rope" /> */}
 
         {/* Section 3: Recognition & Achievements */}
         <Recognition />
